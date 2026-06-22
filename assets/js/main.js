@@ -48,11 +48,11 @@
     maxDist:      160,
     speed:        0.28,
     nodeRadius:   1.8,
-    lineOpacity:  0.18,
-    nodeOpacity:  0.55,
-    colorCyan:    [0, 198, 255],
-    colorPurple:  [123, 47, 190],
-    colorTeal:    [0, 255, 179],
+    lineOpacity:  0.15,
+    nodeOpacity:  0.5,
+    colorGreen:   [34, 197, 94],
+    colorTeal:    [45, 212, 191],
+    colorLight:   [74, 222, 128],
   };
 
   function resize() {
@@ -61,7 +61,7 @@
   }
 
   function randomColor() {
-    const colors = [CONFIG.colorCyan, CONFIG.colorPurple, CONFIG.colorTeal];
+    const colors = [CONFIG.colorGreen, CONFIG.colorTeal, CONFIG.colorLight];
     return colors[Math.floor(Math.random() * colors.length)];
   }
 
@@ -268,6 +268,47 @@
       btn.textContent = 'Error — please try again';
       btn.disabled    = false;
       setTimeout(() => { btn.textContent = orig; }, 3000);
+    }
+  });
+})();
+
+/* ── Volunteer form ─────────────────────────────────────────────────── */
+(function initVolunteerForm() {
+  const form = document.getElementById('volunteerForm');
+  if (!form) return;
+
+  form.addEventListener('submit', async e => {
+    e.preventDefault();
+    const btn  = document.getElementById('volunteerSubmit');
+    const orig = btn.textContent;
+    btn.textContent = 'Submitting…';
+    btn.disabled    = true;
+
+    try {
+      const data = new FormData(form);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
+      btn.textContent      = 'Application Submitted ✓';
+      btn.style.background = 'linear-gradient(135deg,#22C55E,#2DD4BF)';
+      btn.style.color      = '#040D07';
+      form.reset();
+      setTimeout(() => {
+        btn.textContent      = orig;
+        btn.disabled         = false;
+        btn.style.background = '';
+        btn.style.color      = '';
+      }, 5000);
+    } catch {
+      /* Fallback: open mail client */
+      const fields = new FormData(form);
+      let body = '';
+      fields.forEach((v, k) => { body += `${k}: ${v}\n`; });
+      window.location.href = `mailto:info@centerforaiinclusion.org?subject=Volunteer Application&body=${encodeURIComponent(body)}`;
+      btn.textContent = orig;
+      btn.disabled    = false;
     }
   });
 })();
