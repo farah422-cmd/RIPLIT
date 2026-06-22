@@ -240,14 +240,32 @@ input, textarea, select, address { font: inherit; font-style: normal; }
 
 .nav__logo-icon { flex-shrink: 0; }
 
-.nav__logo-wordmark {
+.nav__logo-text {
+  display: flex;
+  flex-direction: column;
+  line-height: 1;
+  gap: 1px;
+}
+
+.nav__logo-top {
+  font-family: var(--font-body);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--rose);
+}
+
+.nav__logo-bottom {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 22px;
   font-weight: 600;
   color: var(--brown);
-  letter-spacing: 0.02em;
-  line-height: 1;
+  letter-spacing: 0.03em;
 }
+
+.footer__logo-top { color: var(--rose-light); }
+.footer__logo-bottom { color: var(--cream); font-size: 22px; }
 
 .nav__links {
   display: flex;
