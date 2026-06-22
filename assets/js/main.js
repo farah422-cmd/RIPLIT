@@ -44,15 +44,19 @@
   let W, H, particles, animId;
 
   const CONFIG = {
-    count:        70,
-    maxDist:      160,
-    speed:        0.28,
-    nodeRadius:   1.8,
-    lineOpacity:  0.18,
-    nodeOpacity:  0.55,
-    colorCyan:    [0, 198, 255],
-    colorPurple:  [123, 47, 190],
-    colorTeal:    [0, 255, 179],
+    count:       80,
+    maxDist:     155,
+    speed:       0.30,
+    nodeRadius:  1.6,
+    lineOpacity: 0.10,
+    nodeOpacity: 0.50,
+    colors: [
+      [16,  185, 129],
+      [59,  130, 246],
+      [245, 158,  11],
+      [139,  92, 246],
+      [20,  184, 166],
+    ],
   };
 
   function resize() {
@@ -61,8 +65,7 @@
   }
 
   function randomColor() {
-    const colors = [CONFIG.colorCyan, CONFIG.colorPurple, CONFIG.colorTeal];
-    return colors[Math.floor(Math.random() * colors.length)];
+    return CONFIG.colors[Math.floor(Math.random() * CONFIG.colors.length)];
   }
 
   function createParticles() {
