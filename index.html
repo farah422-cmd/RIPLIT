@@ -659,7 +659,9 @@
           </div>
         </div>
 
-        <form class="contact__form reveal" id="contactForm" novalidate aria-label="Contact form">
+        <form class="contact__form reveal" id="contactForm" name="contact" method="POST" data-netlify="true" data-netlify-honeypot="bot-field" novalidate aria-label="Contact form">
+          <input type="hidden" name="form-name" value="contact" />
+          <p hidden><input name="bot-field" /></p>
           <div class="form-row">
             <div class="form-group">
               <label for="fname">First Name</label>

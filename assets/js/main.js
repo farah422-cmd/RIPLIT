@@ -236,7 +236,7 @@
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', async e => {
     e.preventDefault();
 
     const btn  = form.querySelector('[type="submit"]');
@@ -245,20 +245,30 @@
     btn.textContent = 'Sending…';
     btn.disabled    = true;
 
-    /* Simulate send — replace with real fetch() to your endpoint */
-    setTimeout(() => {
-      btn.textContent = 'Message Sent ✓';
+    try {
+      const data = new FormData(form);
+      await fetch('/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(data).toString(),
+      });
+
+      btn.textContent      = 'Message Sent ✓';
       btn.style.background = 'linear-gradient(135deg,#00ffb3,#00c6ff)';
       btn.style.color      = '#03070f';
+      form.reset();
 
       setTimeout(() => {
-        btn.textContent   = orig;
-        btn.disabled      = false;
+        btn.textContent      = orig;
+        btn.disabled         = false;
         btn.style.background = '';
         btn.style.color      = '';
-        form.reset();
-      }, 3500);
-    }, 1200);
+      }, 4000);
+    } catch {
+      btn.textContent = 'Error — please try again';
+      btn.disabled    = false;
+      setTimeout(() => { btn.textContent = orig; }, 3000);
+    }
   });
 })();
 
