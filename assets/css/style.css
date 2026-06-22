@@ -240,6 +240,16 @@ input, textarea, select, address { font: inherit; font-style: normal; }
 
 .nav__logo-icon { flex-shrink: 0; }
 
+.nav__logo-wordmark {
+  font-family: var(--font-display);
+  font-size: 34px;
+  font-weight: 600;
+  color: var(--brown);
+  letter-spacing: 0.04em;
+  line-height: 1;
+}
+
+/* Footer stacked logo (kept for footer use) */
 .nav__logo-text {
   display: flex;
   flex-direction: column;
@@ -1173,6 +1183,61 @@ input, textarea, select, address { font: inherit; font-style: normal; }
 }
 
 .footer__legal a:hover { color: rgba(255,255,255,0.65); }
+
+/* ══════════════════════════════════════════════════════════════════════
+   PROMO STRIP
+   ══════════════════════════════════════════════════════════════════════ */
+.promo-strip {
+  background: var(--rose-pale);
+  border-top: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--gray-200);
+  padding-block: 20px;
+}
+
+.promo-strip__grid {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-xl);
+  flex-wrap: wrap;
+}
+
+.promo-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--brown-mid);
+}
+
+.promo-item__icon {
+  color: var(--rose);
+  font-size: 12px;
+}
+
+.promo-item strong { color: var(--brown); }
+
+.promo-divider {
+  width: 1px;
+  height: 30px;
+  background: var(--gray-300);
+  flex-shrink: 0;
+}
+
+/* Contact form title */
+.contact__form-title {
+  font-family: var(--font-display);
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--brown);
+  margin-bottom: var(--space-xl);
+}
+
+/* Service card accent variant */
+.service-card--accent {
+  border-color: var(--rose-light);
+  background: var(--rose-pale);
+}
 
 /* ══════════════════════════════════════════════════════════════════════
    RESPONSIVE

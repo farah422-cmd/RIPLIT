@@ -31,6 +31,18 @@
   }
 })();
 
+/* ── Smooth scroll for ALL anchor links ─────────────────────────────── */
+document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+  anchor.addEventListener('click', function (e) {
+    const href = this.getAttribute('href');
+    if (href === '#' || href === '#privacy' || href === '#terms') return;
+    const target = document.querySelector(href);
+    if (!target) return;
+    e.preventDefault();
+    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+});
+
 /* ── Reveal on scroll ────────────────────────────────────────────────── */
 (function initReveal() {
   const els = document.querySelectorAll('.reveal');
@@ -79,25 +91,41 @@
   const form = document.getElementById('bookForm');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    const fname   = form.querySelector('[name="first_name"]').value.trim();
+    const lname   = form.querySelector('[name="last_name"]').value.trim();
+    const email   = form.querySelector('[name="email"]').value.trim();
+    const phone   = form.querySelector('[name="phone"]').value.trim();
+    const service = form.querySelector('[name="service"]').value;
+    const message = form.querySelector('[name="message"]').value.trim();
+
+    const body = [
+      `Name: ${fname} ${lname}`,
+      `Email: ${email}`,
+      phone ? `Phone: ${phone}` : '',
+      `Service: ${service}`,
+      message ? `Notes: ${message}` : '',
+    ].filter(Boolean).join('\n');
+
+    const subject = encodeURIComponent(`Appointment Request — ${fname} ${lname}`);
+    const bodyEnc = encodeURIComponent(body);
+
+    window.location.href = `mailto:info@aestheticbyfilsan.com?subject=${subject}&body=${bodyEnc}`;
+
     const btn  = form.querySelector('[type="submit"]');
     const orig = btn.textContent;
-
-    btn.textContent = 'Sending…';
-    btn.disabled    = true;
+    btn.textContent = 'Request Sent ✓';
+    btn.style.background = 'var(--rose-dark)';
+    btn.disabled = true;
 
     setTimeout(() => {
-      btn.textContent      = 'Request Sent ✓';
-      btn.style.background = '#6B4A38';
-
-      setTimeout(() => {
-        btn.textContent      = orig;
-        btn.disabled         = false;
-        btn.style.background = '';
-        form.reset();
-      }, 3500);
-    }, 1000);
+      btn.textContent      = orig;
+      btn.disabled         = false;
+      btn.style.background = '';
+      form.reset();
+    }, 4000);
   });
 })();
 
@@ -106,34 +134,38 @@
   const form = document.getElementById('contactForm');
   if (!form) return;
 
-  form.addEventListener('submit', e => {
+  form.addEventListener('submit', function (e) {
     e.preventDefault();
+
+    const fname   = form.querySelector('[name="fname"]').value.trim();
+    const lname   = form.querySelector('[name="lname"]').value.trim();
+    const email   = form.querySelector('[name="email"]').value.trim();
+    const subject = form.querySelector('[name="subject"]').value;
+    const message = form.querySelector('[name="message"]').value.trim();
+
+    const body = [
+      `Name: ${fname} ${lname}`,
+      `Email: ${email}`,
+      subject ? `Topic: ${subject}` : '',
+      message ? `Message: ${message}` : '',
+    ].filter(Boolean).join('\n');
+
+    const subjectEnc = encodeURIComponent(`Website Inquiry — ${fname} ${lname}`);
+    const bodyEnc    = encodeURIComponent(body);
+
+    window.location.href = `mailto:info@aestheticbyfilsan.com?subject=${subjectEnc}&body=${bodyEnc}`;
+
     const btn  = form.querySelector('[type="submit"]');
     const orig = btn.textContent;
-
-    btn.textContent = 'Sending…';
-    btn.disabled    = true;
+    btn.textContent      = 'Message Sent ✓';
+    btn.style.background = 'var(--rose-dark)';
+    btn.disabled         = true;
 
     setTimeout(() => {
-      btn.textContent      = 'Message Sent ✓';
-      btn.style.background = '#6B4A38';
-
-      setTimeout(() => {
-        btn.textContent      = orig;
-        btn.disabled         = false;
-        btn.style.background = '';
-        form.reset();
-      }, 3500);
-    }, 1000);
+      btn.textContent      = orig;
+      btn.disabled         = false;
+      btn.style.background = '';
+      form.reset();
+    }, 4000);
   });
 })();
-
-/* ── Smooth scroll for anchor links ─────────────────────────────────── */
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-  anchor.addEventListener('click', function (e) {
-    const target = document.querySelector(this.getAttribute('href'));
-    if (!target) return;
-    e.preventDefault();
-    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-  });
-});
